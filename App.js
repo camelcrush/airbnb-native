@@ -18,7 +18,7 @@ export default function App() {
   const handleFinish = () => setIsReady(true);
   const loadAssets = async () =>{
     const images = [require("./assets/loadingBg.jpeg"), "http://logok.org/wp-content/uploads/2014/07/airbnb-logo-belo-219x286.png"];
-    console.log(cacheImages(images));
+    cacheImages(images);
   };
   return isReady ? (<Text> I'm Ready</Text>) : (
     <AppLoading onError={console.error} onFinish={handleFinish} startAsync={loadAssets} />
