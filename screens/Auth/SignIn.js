@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { StatusBar } from "react-native";
 import styled from "styled-components/native";
 import Btn from "../../components/Auth/Btn";
 import Input from "../../components/Auth/Input";
@@ -10,7 +10,9 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const TextInput = styled.TextInput``;
+const InputContainer = styled.View`
+  margin-bottom: 30px;
+`;
 
 export default () => {
   const [username, setUsername] = useState("");
@@ -18,18 +20,21 @@ export default () => {
   const handleSubmit = () => alert(`${username}${password}`);
   return (
     <Container>
-      <Input
-        value={username}
-        placeholder="Username"
-        autoCapitalize="none"
-        stateFn={setUsername}
-      />
-      <Input
-        value={password}
-        placeholder="Password"
-        isPassword={true}
-        stateFn={setPassword}
-      />
+      <StatusBar barStyle="dark-content" />
+      <InputContainer>
+        <Input
+          value={username}
+          placeholder="Username"
+          autoCapitalize="none"
+          stateFn={setUsername}
+        />
+        <Input
+          value={password}
+          placeholder="Password"
+          isPassword={true}
+          stateFn={setPassword}
+        />
+      </InputContainer>
       <Btn text={"Sign In"} accent onPress={handleSubmit} />
     </Container>
   );
