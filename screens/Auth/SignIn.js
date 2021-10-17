@@ -15,10 +15,10 @@ const InputContainer = styled.View`
   margin-bottom: 30px;
 `;
 
-export default () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const handleSubmit = () => alert(`${username}${password}`);
+export default ({ route: { params } }) => {
+  const [email, setEmail] = useState(params?.email);
+  const [password, setPassword] = useState(params?.password);
+  const handleSubmit = () => alert(`${email}${password}`);
   return (
     <DismissKeyboard>
       <Container>
@@ -26,10 +26,10 @@ export default () => {
         <KeyboardAvoidingView behavior="position">
           <InputContainer>
             <Input
-              value={username}
-              placeholder="Username"
+              value={email}
+              placeholder="Email"
               autoCapitalize="none"
-              stateFn={setUsername}
+              stateFn={setEmail}
             />
             <Input
               value={password}
