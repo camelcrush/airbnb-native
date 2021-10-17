@@ -18,11 +18,14 @@ const Image = styled.Image`
 `;
 
 const Logo = styled.Image`
+  margin-top: 50px;
   width: 100px;
   height: 100px;
 `;
 
-const BtnContainer = styled.View``;
+const BtnContainer = styled.View`
+  margin-top: 40px;
+`;
 
 export default ({ navigation }) => {
   const goToSignUp = () => navigation.navigate("SignUp");
