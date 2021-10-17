@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import Btn from "../../components/Auth/Btn";
 import Input from "../../components/Auth/Input";
 import DismissKeyboard from "../../components/DismissKeyboard";
-import { createAccount } from "../../api";
+import api from "../../api";
 import { isEmail } from "../../utils";
 
 const Container = styled.View`
@@ -45,7 +45,7 @@ export default ({ navigation: { navigate } }) => {
     }
     setLoading(true);
     try {
-      const { status } = await createAccount({
+      const { status } = await api.createAccount({
         first_name: firstName,
         last_name: lastName,
         email,
