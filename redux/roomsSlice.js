@@ -17,3 +17,7 @@ const roomsSlice = createSlice({
     },
   },
 });
+
+const { setExploreRooms } = roomsSlice.actions;
+
+export default roomsSlice.reducer;
