@@ -5,7 +5,7 @@ import Btn from "../../components/Auth/Btn";
 import Input from "../../components/Auth/Input";
 import DismissKeyboard from "../../components/DismissKeyboard";
 import api from "../../api";
-import { isEmail } from "../../utils";
+import utils from "../../utils";
 
 const Container = styled.View`
   flex: 1;
@@ -33,7 +33,7 @@ export default ({ navigation: { navigate } }) => {
       alert("All fields are required.");
       return false;
     }
-    if (!isEmail(email)) {
+    if (!utils.isEmail(email)) {
       alert("Please add a valid Email.");
       return false;
     }

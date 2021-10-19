@@ -6,7 +6,7 @@ import Btn from "../../components/Auth/Btn";
 import Input from "../../components/Auth/Input";
 import DismissKeyboard from "../../components/DismissKeyboard";
 import { userLogin } from "../../redux/usersSlice";
-import { isEmail } from "../../utils";
+import utils from "../../utils";
 
 const Container = styled.View`
   flex: 1;
@@ -27,7 +27,7 @@ export default ({ route: { params } }) => {
       alert("All fields are required.");
       return false;
     }
-    if (!isEmail) {
+    if (!utils.isEmail(email)) {
       alert("Email is invalid.");
       return false;
     }
