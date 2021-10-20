@@ -32,7 +32,7 @@ const FakeText = styled.Text`
   font-weight: 300;
 `;
 
-export default ({ rooms }) => {
+export default ({ rooms, increasePage }) => {
   return (
     <Container>
       {rooms.length === 0 ? (
@@ -58,7 +58,10 @@ export default ({ rooms }) => {
                 isSuperhost={room.user.superhost}
               />
             ))}
-            <TouchableOpacity style={{ alignItems: "center" }}>
+            <TouchableOpacity
+              onPress={increasePage}
+              style={{ alignItems: "center" }}
+            >
               <Text>Load More</Text>
             </TouchableOpacity>
           </ScrollView>
