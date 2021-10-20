@@ -16,7 +16,8 @@ export default ({ rooms }) => {
         <ActivityIndicator color="black" />
       ) : (
         <ScrollView
-          style={{ width: "100%", marginTop: 120 }}
+          showsVerticalScrollIndicator={false}
+          style={{ width: "100%", marginTop: 50 }}
           contentContainerStyle={{ paddingHorizontal: 15 }}
         >
           {rooms.map((room) => (
