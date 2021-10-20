@@ -49,6 +49,7 @@ const PhotosContainer = styled.View`
   overflow: hidden;
   width: 100%;
   height: ${height / 4}px;
+  border-radius: 4px;
 `;
 
 const SlideImage = styled.Image`
