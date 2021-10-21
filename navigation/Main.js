@@ -16,6 +16,7 @@ const Main = createBottomTabNavigator();
 export default () => (
   <Main.Navigator
     screenOptions={({ route }) => ({
+      headerShown: false,
       tabBarActiveTintColor: colors.red,
       tabBarStyle: {
         paddingTop: 10,

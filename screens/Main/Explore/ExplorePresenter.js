@@ -19,7 +19,7 @@ const FakeBar = styled.View`
   height: 40px;
   width: 100%;
   background-color: white;
-  margin-top: 20px;
+  margin: 80px 0px 10px 0px;
   border-radius: 7px;
   justify-content: center;
   padding-left: 10px;
@@ -61,7 +61,7 @@ export default ({ rooms, increasePage }) => {
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={{ width: "100%" }}
-            contentContainerStyle={{ paddingTop: 20 }}
+            contentContainerStyle={{ paddingTop: 30 }}
           >
             {rooms.map((room) => (
               <RoomCard
