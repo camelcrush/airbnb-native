@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import utils from "../utils";
 import { toggleFav } from "../redux/usersSlice";
+import colors from "../colors";
 
 const { width, height } = Dimensions.get("screen");
 
