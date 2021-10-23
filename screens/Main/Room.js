@@ -9,8 +9,11 @@ const Container = styled.View`
 
 const Text = styled.Text``;
 
-export default () => (
-  <Container>
-    <Text>Room</Text>
-  </Container>
-);
+export default ({ route: { params } }) => {
+  console.log(params);
+  return (
+    <Container>
+      <Text>Room</Text>
+    </Container>
+  );
+};

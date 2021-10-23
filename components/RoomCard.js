@@ -95,11 +95,13 @@ function getIconName(isFav) {
   }
 }
 
-const RoomCard = ({ id, isFav, isSuperhost, photos, name, price }) => {
+const RoomCard = ({ id, isFav, isSuperhost, photos, name, price, roomObj }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("RoomDetail")}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("RoomDetail", { ...roomObj })}
+    >
       <Container>
         <TOpacity onPress={() => dispatch(toggleFav(id))}>
           <FavsButton>
@@ -160,6 +162,7 @@ RoomCard.proptypes = {
   ),
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  roomObj: PropTypes.object.isRequired,
 };
 
 export default RoomCard;
