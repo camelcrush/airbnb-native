@@ -79,6 +79,21 @@ const TOpacity = styled.TouchableOpacity`
   top: 10px;
 `;
 
+function getIconName(isFav) {
+  const isAndroid = utils.isAndroid();
+  if (isAndroid) {
+    if (isFav) {
+      return "md-heart";
+    }
+    return "md-heart-outline";
+  } else {
+    if (isFav) {
+      return "ios-heart";
+    }
+    return "ios-heart-outline";
+  }
+}
+
 const RoomCard = ({ id, isFav, isSuperhost, photos, name, price }) => {
   const dispatch = useDispatch();
   return (
@@ -87,7 +102,8 @@ const RoomCard = ({ id, isFav, isSuperhost, photos, name, price }) => {
         <FavsButton>
           <Ionicons
             size={28}
-            name={utils.isAndroid ? "md-heart-outline" : "ios-heart-outline"}
+            color={isFav ? colors.red : colors.black}
+            name={getIconName(isFav)}
           />
         </FavsButton>
       </TOpacity>
