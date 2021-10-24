@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 import styled from "styled-components/native";
 import DissmissKeyboard from "../../../components/DismissKeyboard";
+import colors from "../../../colors";
 
 const Container = styled.View``;
 
@@ -56,40 +57,96 @@ const Filter = styled.TextInput`
   shadow-offset: 0px 1px;
 `;
 
+const SearchBtn = styled.TouchableOpacity`
+  background-color: ${colors.red};
+  padding: 10px;
+  margin: 10px 30px;
+  border-radius: 10px;
+  align-items: center;
+`;
+
+const SearchText = styled.Text`
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+`;
+
 export default () => {
   const navigation = useNavigation();
+  const [beds, setBeds] = useState();
+  const [bedrooms, setBedrooms] = useState();
+  const [bathrooms, setBathrooms] = useState();
+  const [maxPrice, setMaxPrice] = useState();
+  const submit = () => {
+    //call the api
+    const form = {
+      ...(beds && { beds }),
+      ...(bedrooms && { bedrooms }),
+      ...(bathrooms && { bathrooms }),
+      ...(maxPrice && { max_price: maxPrice }),
+    };
+    console.log(form);
+  };
   return (
     <DissmissKeyboard>
-      <Container>
-        <SearchContainer>
-          <SearchBar autoFocus={true} placeholder="Search by City..." />
-          <CancelContainer onPress={() => navigation.goBack()}>
-            <CancelText>Cancel</CancelText>
-          </CancelContainer>
-        </SearchContainer>
-        <FiltersContainer
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddigVertical: 10, paddingHorizontal: 20 }}
-        >
-          <FilterContainer>
-            <FilterLabel>Beds</FilterLabel>
-            <Filter placeholder="0" keyboardType={"number-pad"} />
-          </FilterContainer>
-          <FilterContainer>
-            <FilterLabel>Bedrooms</FilterLabel>
-            <Filter placeholder="0" keyboardType={"number-pad"} />
-          </FilterContainer>
-          <FilterContainer>
-            <FilterLabel>Bathrooms</FilterLabel>
-            <Filter placeholder="0" keyboardType={"number-pad"} />
-          </FilterContainer>
-          <FilterContainer>
-            <FilterLabel>Max. Price</FilterLabel>
-            <Filter placeholder="0" keyboardType={"number-pad"} />
-          </FilterContainer>
-        </FiltersContainer>
-      </Container>
+      <>
+        <Container>
+          <SearchContainer>
+            <SearchBar autoFocus={true} placeholder="Search by City..." />
+            <CancelContainer onPress={() => navigation.goBack()}>
+              <CancelText>Cancel</CancelText>
+            </CancelContainer>
+          </SearchContainer>
+          <FiltersContainer
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              paddigVertical: 10,
+              paddingHorizontal: 20,
+            }}
+          >
+            <FilterContainer>
+              <FilterLabel>Beds</FilterLabel>
+              <Filter
+                onChangeText={(text) => setBeds(text)}
+                value={beds}
+                placeholder="0"
+                keyboardType={"number-pad"}
+              />
+            </FilterContainer>
+            <FilterContainer>
+              <FilterLabel>Bedrooms</FilterLabel>
+              <Filter
+                onChangeText={(text) => setBedrooms(text)}
+                value={bedrooms}
+                placeholder="0"
+                keyboardType={"number-pad"}
+              />
+            </FilterContainer>
+            <FilterContainer>
+              <FilterLabel>Bathrooms</FilterLabel>
+              <Filter
+                onChangeText={(text) => setBathrooms(text)}
+                value={bathrooms}
+                placeholder="0"
+                keyboardType={"number-pad"}
+              />
+            </FilterContainer>
+            <FilterContainer>
+              <FilterLabel>Max. Price</FilterLabel>
+              <Filter
+                onChangeText={(text) => setMaxPrice(text)}
+                value={maxPrice}
+                placeholder="$0"
+                keyboardType={"number-pad"}
+              />
+            </FilterContainer>
+          </FiltersContainer>
+        </Container>
+        <SearchBtn onPress={submit}>
+          <SearchText>Search</SearchText>
+        </SearchBtn>
+      </>
     </DissmissKeyboard>
   );
 };
