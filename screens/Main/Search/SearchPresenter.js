@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/core";
+import React from "react";
 import styled from "styled-components/native";
 import DissmissKeyboard from "../../../components/DismissKeyboard";
 import colors from "../../../colors";
-import { ActivityIndicator, Keyboard } from "react-native";
-import api from "../../../api";
+import { ActivityIndicator } from "react-native";
 import RoomCard from "../../../components/RoomCard";
 
 const Container = styled.View``;
@@ -84,114 +82,99 @@ const Results = styled.ScrollView`
   margin-top: 25px;
 `;
 
-export default () => {
-  const navigation = useNavigation();
-  const [searching, setSearching] = useState(false);
-  const [beds, setBeds] = useState();
-  const [bedrooms, setBedrooms] = useState();
-  const [bathrooms, setBathrooms] = useState();
-  const [maxPrice, setMaxPrice] = useState();
-  const [results, setResults] = useState();
-  const triggerSearch = async () => {
-    //call the api
-    setSearching(true);
-    const form = {
-      ...(beds && { beds }),
-      ...(bedrooms && { bedrooms }),
-      ...(bathrooms && { bathrooms }),
-      ...(maxPrice && { max_price: maxPrice }),
-    };
-    try {
-      const { data } = await api.search(form);
-      setResults(data);
-    } catch (e) {
-      console.warn(e);
-    } finally {
-      Keyboard.dismiss();
-      setSearching(false);
-    }
-  };
-  return (
-    <DissmissKeyboard>
-      <>
-        <Container>
-          <SearchContainer>
-            <SearchBar autoFocus={true} placeholder="Search by City..." />
-            <CancelContainer onPress={() => navigation.goBack()}>
-              <CancelText>Cancel</CancelText>
-            </CancelContainer>
-          </SearchContainer>
-          <FiltersContainer
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
-              paddigVertical: 10,
-              paddingHorizontal: 10,
-            }}
-          >
-            <FilterContainer>
-              <FilterLabel>Beds</FilterLabel>
-              <Filter
-                onChangeText={(text) => setBeds(text)}
-                value={beds}
-                placeholder="0"
-                keyboardType={"number-pad"}
-              />
-            </FilterContainer>
-            <FilterContainer>
-              <FilterLabel>Bedrooms</FilterLabel>
-              <Filter
-                onChangeText={(text) => setBedrooms(text)}
-                value={bedrooms}
-                placeholder="0"
-                keyboardType={"number-pad"}
-              />
-            </FilterContainer>
-            <FilterContainer>
-              <FilterLabel>Bathrooms</FilterLabel>
-              <Filter
-                onChangeText={(text) => setBathrooms(text)}
-                value={bathrooms}
-                placeholder="0"
-                keyboardType={"number-pad"}
-              />
-            </FilterContainer>
-            <FilterContainer>
-              <FilterLabel>Max. Price</FilterLabel>
-              <Filter
-                onChangeText={(text) => setMaxPrice(text)}
-                value={maxPrice}
-                placeholder="$0"
-                keyboardType={"number-pad"}
-              />
-            </FilterContainer>
-          </FiltersContainer>
-        </Container>
-        <SearchBtn onPress={searching ? null : triggerSearch}>
-          {searching ? (
-            <ActivityIndicator color="white" />
-          ) : (
-            <SearchText>Search</SearchText>
-          )}
-        </SearchBtn>
-        {results ? (
-          <ResultsText>Showing {results.count} results</ResultsText>
-        ) : null}
-        <Results contentContainerStyle={{ paddingHorizontal: 15 }}>
-          {results?.results?.map((room) => (
-            <RoomCard
-              key={room.id}
-              name={room.name}
-              price={room.price}
-              photos={room.photos}
-              id={room.id}
-              isFav={room.is_fav}
-              isSuperhost={room.user.superhost}
-              roomObj={room}
+export default ({
+  navigation,
+  beds,
+  setBeds,
+  bedrooms,
+  setBedrooms,
+  bathrooms,
+  setBathrooms,
+  maxPrice,
+  setMaxPrice,
+  searching,
+  triggerSearch,
+  results,
+}) => (
+  <DissmissKeyboard>
+    <>
+      <Container>
+        <SearchContainer>
+          <SearchBar autoFocus={true} placeholder="Search by City..." />
+          <CancelContainer onPress={() => navigation.goBack()}>
+            <CancelText>Cancel</CancelText>
+          </CancelContainer>
+        </SearchContainer>
+        <FiltersContainer
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            paddigVertical: 10,
+            paddingHorizontal: 10,
+          }}
+        >
+          <FilterContainer>
+            <FilterLabel>Beds</FilterLabel>
+            <Filter
+              onChangeText={(text) => setBeds(text)}
+              value={beds}
+              placeholder="0"
+              keyboardType={"number-pad"}
             />
-          ))}
-        </Results>
-      </>
-    </DissmissKeyboard>
-  );
-};
+          </FilterContainer>
+          <FilterContainer>
+            <FilterLabel>Bedrooms</FilterLabel>
+            <Filter
+              onChangeText={(text) => setBedrooms(text)}
+              value={bedrooms}
+              placeholder="0"
+              keyboardType={"number-pad"}
+            />
+          </FilterContainer>
+          <FilterContainer>
+            <FilterLabel>Bathrooms</FilterLabel>
+            <Filter
+              onChangeText={(text) => setBathrooms(text)}
+              value={bathrooms}
+              placeholder="0"
+              keyboardType={"number-pad"}
+            />
+          </FilterContainer>
+          <FilterContainer>
+            <FilterLabel>Max. Price</FilterLabel>
+            <Filter
+              onChangeText={(text) => setMaxPrice(text)}
+              value={maxPrice}
+              placeholder="$0"
+              keyboardType={"number-pad"}
+            />
+          </FilterContainer>
+        </FiltersContainer>
+      </Container>
+      <SearchBtn onPress={searching ? null : triggerSearch}>
+        {searching ? (
+          <ActivityIndicator color="white" />
+        ) : (
+          <SearchText>Search</SearchText>
+        )}
+      </SearchBtn>
+      {results ? (
+        <ResultsText>Showing {results.count} results</ResultsText>
+      ) : null}
+      <Results contentContainerStyle={{ paddingHorizontal: 15 }}>
+        {results?.results?.map((room) => (
+          <RoomCard
+            key={room.id}
+            name={room.name}
+            price={room.price}
+            photos={room.photos}
+            id={room.id}
+            isFav={room.is_fav}
+            isSuperhost={room.user.superhost}
+            roomObj={room}
+          />
+        ))}
+      </Results>
+    </>
+  </DissmissKeyboard>
+);
