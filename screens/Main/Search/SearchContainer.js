@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/core";
 import { Keyboard } from "react-native";
 import api from "../../../api";
 
-export default () => {
+export default ({ token }) => {
   const navigation = useNavigation();
   const [searching, setSearching] = useState(false);
   const [beds, setBeds] = useState();
@@ -22,7 +22,7 @@ export default () => {
       ...(maxPrice && { max_price: maxPrice }),
     };
     try {
-      const { data } = await api.search(form);
+      const { data } = await api.search(form, token);
       setResults(data);
     } catch (e) {
       console.warn(e);
