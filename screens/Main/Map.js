@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { connect } from "react-redux";
@@ -55,6 +55,7 @@ const RoomPrice = styled.Text`
 `;
 
 const Map = ({ rooms }) => {
+  const mapRef = useRef();
   const [currentIndex, setCurrentIndex] = useState(0);
   const onScroll = (e) => {
     const {
@@ -65,30 +66,44 @@ const Map = ({ rooms }) => {
     const position = Math.abs(Math.round(x / width));
     setCurrentIndex(position);
   };
+  useEffect(() => {
+    if (currentIndex !== 0) {
+      mapRef.current?.animateCamera(
+        {
+          center: {
+            latitude: parseFloat(rooms[currentIndex].lat),
+            longitude: parseFloat(rooms[currentIndex].lng),
+          },
+        },
+        { duration: 1000 }
+      );
+    }
+  }, [currentIndex]);
   return (
     <Container>
       <MapView
+        ref={mapRef}
         style={StyleSheet.absoluteFill}
         camera={{
           center: {
             latitude: parseFloat(rooms[0].lat),
             longitude: parseFloat(rooms[0].lng),
           },
-          altitude: 1000,
+          altitude: 2000,
           pitch: 0,
           heading: 0,
           zoom: 10,
         }}
       >
-        {rooms?.map((room) => {
+        {rooms?.map((room) => (
           <Marker
             key={room.id}
             coordinate={{
               latitude: parseFloat(room.lat),
               longitude: parseFloat(room.lng),
             }}
-          />;
-        })}
+          />
+        ))}
       </MapView>
       <ScrollView
         onScroll={onScroll}
