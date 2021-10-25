@@ -32,12 +32,21 @@ export default ({ rooms }) => {
       moveMap();
     }
   }, [currentIndex]);
+  const onRegionChangeComplete = async () => {
+    try {
+      const { northEast, southWest } = await mapRef.current?.getMapBoundaries();
+      //   console.log(northEast, southWest);
+    } catch (e) {
+      console.warn(e);
+    }
+  };
   return (
     <MapPresenter
       rooms={rooms}
       mapRef={mapRef}
       currentIndex={currentIndex}
       onScroll={onScroll}
+      onRegionChangeComplete={onRegionChangeComplete}
     />
   );
 };

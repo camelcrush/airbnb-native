@@ -85,9 +85,16 @@ const RoomMarker = ({ price, selected }) => (
   </MarkerWrapper>
 );
 
-export default ({ rooms, mapRef, currentIndex, onScroll }) => (
+export default ({
+  rooms,
+  mapRef,
+  currentIndex,
+  onScroll,
+  onRegionChangeComplete,
+}) => (
   <Container>
     <MapView
+      onRegionChangeComplete={onRegionChangeComplete}
       ref={mapRef}
       style={StyleSheet.absoluteFill}
       camera={{
